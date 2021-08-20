@@ -2,7 +2,11 @@
     <string name="app_name">Ausgabenliste</string>
     <string name="addListButtonText">Neue Liste</string>
     <string name="tvListNameText">Name der Liste:</string>
+    <string name="tvEntryNameText">Bezeichnung:</string>
+    <string name="tvWertText">Wert in Euro:</string>
     <string name="deleteListButtonText">Liste löschen</string>
     <string name="addEntryButtonText">Eintrag Hinzufügen</string>
     <string name="backToMainButtonText">Speichern und Zurück</string>
+    <string name="saveEntryButtonText">Eintrag speichern</string>
+    <string name="deleteEntryButtonText">Eintrag löschen</string>
 </resources>
