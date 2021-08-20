@@ -6,4 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".ListActivity">
 
+    <TextView
+        android:id="@+id/tvListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tvListNameText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Monatsliste"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvListName"
+        app:layout_constraintStart_toEndOf="@+id/tvListName" />
+
+    <LinearLayout
+        android:layout_width="407dp"
+        android:layout_height="672dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        tools:layout_editor_absoluteX="1dp">
+
+        <ListView
+            android:id="@+id/listEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addEntryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="7dp"
+                android:layout_weight="1"
+                android:text="@string/addEntryButtonText" />
+
+            <Button
+                android:id="@+id/deleteListButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_weight="1"
+                android:text="@string/deleteListButtonText" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/backToMainButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:text="@string/backToMainButtonText" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
