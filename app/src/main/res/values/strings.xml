@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ausgabenliste</string>
+    <string name="addListButtonText">Neue Liste</string>
 </resources>
