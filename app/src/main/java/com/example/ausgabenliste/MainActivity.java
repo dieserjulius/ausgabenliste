@@ -35,29 +35,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ExpenditureListsOverview.getInstance().loadInput(this);
+
+        expenditureListsOverview = ExpenditureListsOverview.getInstance().getOverview();
+
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode() == RESULT_OK && result.getData() != null){
-                            //TODO Code nach Empfang des Ergebnisses
-                            Intent data = result.getData();
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 });
-
-        createList();
         buildRecyclerView();
 
 
     }
 
-    private void createList() {
-        expenditureListsOverview = new ArrayList<>();
-        expenditureListsOverview.add(new ExpenditureList("Hello World!"));
-        expenditureListsOverview.add(new ExpenditureList("Hello World."));
-        expenditureListsOverview.add(new ExpenditureList("Hello World?"));
-    }
 
     private void buildRecyclerView() {
         listMain = findViewById(R.id.listMain);
@@ -70,19 +65,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CreateNewList(View view) {
-        Log.i("MainActivity","In CreateNewList");
         ExpenditureList exList = new ExpenditureList();
         showListActivity(ACTIONTYPE.NEW, exList, -1);
     }
 
     private void showListActivity (ACTIONTYPE action, ExpenditureList exList, int position){
         Intent intent = new Intent(this, ListActivity.class);
-        intent.putExtra(ExpenditureList.LST, exList);  // // jeweils  hashKey+wert
+        intent.putExtra(ExpenditureList.LST, exList);
         intent.putExtra(ListActivity.LISTINDEX, position);
         intent.putExtra(ListActivity.ACTION, action.ordinal());
 
         activityResultLauncher.launch(intent);
-
-        //startActivityForResult(intent, sendenr);
     }
 }
