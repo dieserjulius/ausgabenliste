@@ -59,7 +59,7 @@ public class ListActivity extends AppCompatActivity {
             if (action==ACTIONTYPE.EDIT_DELETE) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
                 overview.changeList(lst, indexList);
-                overview.getInstance().saveInput(this);
+                overview.saveInput(this);
 
                 Intent returnintent = new Intent();
                 returnintent.putExtra(RESULT, true);
@@ -69,7 +69,7 @@ public class ListActivity extends AppCompatActivity {
             else if (action==ACTIONTYPE.NEW) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
                 overview.addList(lst);
-                overview.getInstance().saveInput(this);
+                overview.saveInput(this);
 
                 Intent returnintent = new Intent();
                 returnintent.putExtra(RESULT, true);

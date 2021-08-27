@@ -7,7 +7,7 @@
     tools:context=".ListActivity">
 
     <TextView
-        android:id="@+id/tvListName"
+        android:id="@+id/tvListNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,8 +25,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Monatsliste"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvListName"
-        app:layout_constraintStart_toEndOf="@+id/tvListName" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvListNameInput"
+        app:layout_constraintStart_toEndOf="@+id/tvListNameInput" />
 
     <LinearLayout
         android:layout_width="407dp"
@@ -34,14 +34,19 @@
         android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/listName"
-        tools:layout_editor_absoluteX="1dp">
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints">
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listEntry"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="16dp">
 
-        </ListView>
+        </androidx.recyclerview.widget.RecyclerView>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,23 +66,14 @@
                 android:text="@string/addEntryButtonText" />
 
             <Button
-                android:id="@+id/deleteEntryButton"
+                android:id="@+id/backToMainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
-                android:layout_weight="1"
-                android:text="@string/deleteListButtonText" />
+                android:onClick="BackToMain"
+                android:text="@string/backToMainButtonText" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/backToMainButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="80dp"
-            android:onClick="BackToMain"
-            android:text="@string/backToMainButtonText" />
 
     </LinearLayout>
 

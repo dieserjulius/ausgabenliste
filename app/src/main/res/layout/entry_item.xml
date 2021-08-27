@@ -15,9 +15,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/tvListItemNameText"
-            android:textSize="20sp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/tvEntryNameText"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -26,10 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Löschen"
-            android:textColor="#EA1212"
+            android:text="@string/tvEntryAmountText"
+            android:textColor="#047A00"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

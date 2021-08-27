@@ -29,8 +29,8 @@ public class ExpenditureListAdapter extends RecyclerView.Adapter<ExpenditureList
 
         public ExpenditureListViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            tvExpenditureListName = itemView.findViewById(R.id.tvExpenditureListName);
-            tvDeleteList = itemView.findViewById(R.id.tvDeleteList);
+            tvExpenditureListName = itemView.findViewById(R.id.tvEntryName);
+            tvDeleteList = itemView.findViewById(R.id.tvEntryAmount);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

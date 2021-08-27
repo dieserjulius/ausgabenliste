@@ -38,12 +38,12 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvEntryName"
+        android:id="@+id/tvEntryNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/tvEntryNameText"
+        android:text="@string/tvEntryNameInputText"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,8 +55,8 @@
         android:layout_marginTop="24dp"
         android:text="@string/tvWertText"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/tvEntryName"
-        app:layout_constraintTop_toBottomOf="@+id/tvEntryName" />
+        app:layout_constraintStart_toStartOf="@+id/tvEntryNameInput"
+        app:layout_constraintTop_toBottomOf="@+id/tvEntryNameInput" />
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
@@ -66,8 +66,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Einkauf"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvEntryName"
-        app:layout_constraintStart_toEndOf="@+id/tvEntryName" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvEntryNameInput"
+        app:layout_constraintStart_toEndOf="@+id/tvEntryNameInput" />
 
     <EditText
         android:id="@+id/editTextNumberDecimal"
