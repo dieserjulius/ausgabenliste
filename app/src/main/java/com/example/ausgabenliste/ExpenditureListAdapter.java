@@ -15,6 +15,7 @@ public class ExpenditureListAdapter extends RecyclerView.Adapter<ExpenditureList
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
+        void onItemClick(int position);
         void onDeleteClick(int position);
     }
 
@@ -31,10 +32,23 @@ public class ExpenditureListAdapter extends RecyclerView.Adapter<ExpenditureList
             tvExpenditureListName = itemView.findViewById(R.id.tvExpenditureListName);
             tvDeleteList = itemView.findViewById(R.id.tvDeleteList);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("ExpenditureListAdapter", "In onClick itemView");
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
             tvDeleteList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("ExpenditureListAdapter", "In onClick");
+                    Log.i("ExpenditureListAdapter", "In onClick tvDeleteList");
                     if (listener != null){
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {

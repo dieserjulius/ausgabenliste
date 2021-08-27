@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.setOnItemClickListener(new ExpenditureListAdapter.OnItemClickListener() {
             @Override
+            public void onItemClick(int position) {
+                ExpenditureList exList = ExpenditureListsOverview.getInstance().getList(position);
+                showListActivity(ACTIONTYPE.EDIT_DELETE, exList, position);
+            }
+
+            @Override
             public void onDeleteClick(int position) {
                 deleteList(position);
             }

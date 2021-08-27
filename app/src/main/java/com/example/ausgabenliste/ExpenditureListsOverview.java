@@ -84,13 +84,17 @@ public class ExpenditureListsOverview {
     }
 
     public void changeList(ExpenditureList lstNew, int indexList) {
-        if (indexList<=0 && indexList<overview.size()) {
+        if (indexList>=0 && indexList<overview.size()) {
             ExpenditureList lst = overview.get(indexList);
             lst.init(lstNew);
         }
         else {
             Log.e("ExpenditureListsOverview", "Error while Changing List");
         }
+    }
+
+    public ExpenditureList getList(int position){
+        return overview.get(position);
     }
 
     public ArrayList<ExpenditureList> getOverview() {

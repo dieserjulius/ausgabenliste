@@ -31,11 +31,16 @@ public class ListActivity extends AppCompatActivity {
         int intentAction = intent.getIntExtra(ACTION, 0);
         action = ACTIONTYPE.getEnum(intentAction);
 
+        listNameInput = findViewById(R.id.listName);
+
         if (action==ACTIONTYPE.EDIT_DELETE) {
             indexList = intent.getIntExtra(LISTINDEX, -1);
-        }
 
-        listNameInput = findViewById(R.id.listName);
+            ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
+            ExpenditureList currentList = overview.getList(indexList);
+            String currentListName = currentList.getListName();
+            listNameInput.setText(currentListName);
+        }
     }
 
     public void CreateNewEntry(View view) {
@@ -53,11 +58,11 @@ public class ListActivity extends AppCompatActivity {
         else {*/
             if (action==ACTIONTYPE.EDIT_DELETE) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
-                overview.changeList(lst,indexList);
+                overview.changeList(lst, indexList);
                 overview.getInstance().saveInput(this);
 
-                Intent returnintent = new Intent(); // also ein Auftrag, etwas zu tun
-                returnintent.putExtra(RESULT, true); // bräuchte man nicht unbedingt
+                Intent returnintent = new Intent();
+                returnintent.putExtra(RESULT, true);
                 setResult(Activity.RESULT_OK,returnintent);
                 finish();
             }
