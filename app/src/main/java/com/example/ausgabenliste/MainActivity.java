@@ -5,10 +5,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ExpenditureList> expenditureListsOverview;
 
     private RecyclerView listMain;
-    private RecyclerView.Adapter adapter;
+    private ExpenditureListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
@@ -49,10 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         buildRecyclerView();
-
-
     }
-
 
     private void buildRecyclerView() {
         listMain = findViewById(R.id.listMain);
@@ -62,6 +63,42 @@ public class MainActivity extends AppCompatActivity {
 
         listMain.setLayoutManager(layoutManager);
         listMain.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new ExpenditureListAdapter.OnItemClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                deleteList(position);
+            }
+        });
+    }
+
+    private void deleteList(int position) {
+        String msg = "Sind Sie sich sicher, dass Sie die Liste endgültig löschen wollen?";
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        Context context = this;
+
+        alert.setTitle("Endgültig löschen");
+        alert.setMessage(msg);
+
+        alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ExpenditureListsOverview.getInstance().deleteList(position);
+                ExpenditureListsOverview.getInstance().saveInput(context);
+                adapter.notifyItemRemoved(position);
+                Log.i("MainActivity", "Yes pressed");
+            }
+        });
+
+        alert.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i("MainActivity", "No pressed");
+            }
+        });
+
+        alert.show();
     }
 
     public void CreateNewList(View view) {
@@ -77,4 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         activityResultLauncher.launch(intent);
     }
+
+
 }

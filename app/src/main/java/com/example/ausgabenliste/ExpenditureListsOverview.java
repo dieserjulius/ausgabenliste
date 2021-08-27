@@ -31,12 +31,21 @@ public class ExpenditureListsOverview {
         overview.add(lst);
     }
 
+    public void deleteList(int position){
+        if (position >= 0 && position < overview.size()) {
+            overview.remove(position);
+        }
+        else {
+            Log.e("ExpenditureListsOverview", "Position of List out of Bounds");
+        }
+    }
+
     public void saveInput(Context context) {
         try {
             FileOutputStream fout = context.openFileOutput(FILENAME, MODE_PRIVATE);
             DataOutputStream dout = new DataOutputStream(fout);
             dout.writeInt(overview.size());
-            Log.i("ExpenditureListsOverview", "savetoFile, openfile, size: "+overview.size());
+            Log.i("ExpenditureListsOverview", "Saving List to File ok");
             for (ExpenditureList lst : overview) {
                 lst.save(dout);
             }
@@ -45,7 +54,7 @@ public class ExpenditureListsOverview {
             fout.close();
         }
         catch (IOException e) {
-            Log.e("ExpenditureListsOverview", "save2File, Error in save2File");
+            Log.e("ExpenditureListsOverview", "saveError in saveInput");
         }
     }
 
