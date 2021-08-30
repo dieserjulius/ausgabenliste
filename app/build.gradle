@@ -1,12 +1,9 @@
 plugins {
     id 'com.android.application'
-    //id 'java'
-    //id 'application'
 }
 
 project.group 'com.example.ausgabenliste'
 project.version '1.0-SNAPSHOT'
-//mainClassName = project.group+'.MainActivity'
 
 android {
     compileSdkVersion 30
@@ -40,6 +37,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
+
 }
 
 
@@ -61,21 +59,3 @@ dependencies {
 
 
 }
-
-/*application{
-    mainClass.set(project.group+'.MainActivity')
-}
-
-jar {
-    manifest{
-        attributes (
-                "Implementation-Title": project.name,
-                "Implementation-Version": project.version,
-                "Main-Class": application.mainClass
-        )
-    }
-}
-
-test {
-    useJUnitPlatform()
-}*/

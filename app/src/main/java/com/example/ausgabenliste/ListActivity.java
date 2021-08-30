@@ -21,11 +21,17 @@ public class ListActivity extends AppCompatActivity {
 
     private int indexList = -1;
 
+    /**
+     * Baut grundlegende Elemente der View.
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        // Übergabe der eingegebenen Daten
         Intent intent = getIntent();
 
         int intentAction = intent.getIntExtra(ACTION, 0);
@@ -33,7 +39,8 @@ public class ListActivity extends AppCompatActivity {
 
         listNameInput = findViewById(R.id.listName);
 
-        if (action==ACTIONTYPE.EDIT_DELETE) {
+        // Falls eine vorhandene Liste bearbeitet werden soll, wird diese heir geholt
+        if (action == ACTIONTYPE.EDIT_DELETE) {
             indexList = intent.getIntExtra(LISTINDEX, -1);
 
             ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
@@ -43,19 +50,28 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Erstellt einen neuen Eintrag und rudt die EntryActivity auf
+     * @param view
+     */
+
     public void CreateNewEntry(View view) {
+        // Hier wird noch nichts Erstellt
+        // Provisorisch, da das Programm noch nicht fertig ist
         Log.i("ListActivity","In CreateNewEntry");
         Intent intent = new Intent(this, EntryActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Kehrt zur MainActivity zurück und speichert alle eingegebenen Daten
+     * @param view
+     */
+
     public void BackToMain(View view) {
         ExpenditureList lst = getExListFromInput();
-        // Eigentlich nicht nötig, da ExList nie null
-        /*if (lst==null) {
-            return;
-        }
-        else {*/
+
+            // ChangeList Aufruf, falls Liste bereits vorhanden
             if (action==ACTIONTYPE.EDIT_DELETE) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
                 overview.changeList(lst, indexList);
@@ -66,6 +82,7 @@ public class ListActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK,returnintent);
                 finish();
             }
+            // AddList Aufruf, falls Liste noch nicht vorhanden
             else if (action==ACTIONTYPE.NEW) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
                 overview.addList(lst);
@@ -76,11 +93,16 @@ public class ListActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnintent);
                 finish();
             }
-            //}
+
         Intent returnintent = new Intent();
         setResult(Activity.RESULT_CANCELED,returnintent);
         finish();
     }
+
+    /**
+     * Nimmt die Eingaben und erstellt daraus eine neue ExpenditureList
+     * @return Neue ExpenditureList aus den Eingaben
+     */
 
     private ExpenditureList getExListFromInput() {
         String listName = listNameInput.getText().toString();

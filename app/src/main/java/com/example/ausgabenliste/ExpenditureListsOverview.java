@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ExpenditureListsOverview {
+public class  ExpenditureListsOverview {
 
     private final String FILENAME = "expendditurelists.bin";
 
@@ -20,18 +20,38 @@ public class ExpenditureListsOverview {
 
     private static ExpenditureListsOverview instance = new ExpenditureListsOverview();
 
+    /**
+     * Leerer Konstruktor
+     */
+
     public ExpenditureListsOverview() {
     }
+
+    /**
+     * Gibt die Instanz der ExpenditureListOverview zurück
+     * @return Instanz der ExpenditureListOverview
+     */
 
     public static ExpenditureListsOverview getInstance(){
         return instance;
     }
 
+    /**
+     * Fügt eine Liste der Overview hinzu
+     * @param lst Liste, die hinzugefügt werden soll
+     */
+
     public void addList(ExpenditureList lst){
         overview.add(lst);
     }
 
+    /**
+     * Löscht eine Liste aus der Overview
+     * @param position Position der zu löschenden Liste
+     */
+
     public void deleteList(int position){
+        // Überprüfung, ob Position existiert
         if (position >= 0 && position < overview.size()) {
             overview.remove(position);
         }
@@ -40,12 +60,20 @@ public class ExpenditureListsOverview {
         }
     }
 
+    /**
+     * Methode zum Speichern
+     * @param context
+     */
+
     public void saveInput(Context context) {
         try {
+            // Vorbereitung
             FileOutputStream fout = context.openFileOutput(FILENAME, MODE_PRIVATE);
             DataOutputStream dout = new DataOutputStream(fout);
             dout.writeInt(overview.size());
             Log.i("ExpenditureListsOverview", "Saving List to File ok");
+
+            // Aufruf der Save-Methode für jede einzelne ExpenditureList
             for (ExpenditureList lst : overview) {
                 lst.save(dout);
             }
@@ -58,15 +86,24 @@ public class ExpenditureListsOverview {
         }
     }
 
+    /**
+     * Methode zum Laden
+     * @param context
+     */
+
     public void loadInput(Context context) {
         try {
+            // Vorbereitung
             overview.clear();
             FileInputStream fin = context.openFileInput(FILENAME);
             DataInputStream din = new DataInputStream(fin);
             int n = din.readInt();
             Log.i("ExpenditureListsOverview", "Loading List from File ok");
             ExpenditureList lst;
-            for (int i=0; i<n; i++) {
+
+            // Aufruf der Load-Methode für jede einzelne ExpenditureList,
+            // die geladen werden soll
+            for (int i = 0; i < n; i++) {
                 lst = new ExpenditureList();
                 if(lst.load(din)) {
                     overview.add(lst);
@@ -83,8 +120,15 @@ public class ExpenditureListsOverview {
         }
     }
 
+    /**
+     * Ändert eine Liste an einer bestimmten Position zu einer neuen Liste
+     * @param lstNew Neue Liste
+     * @param indexList Position
+     */
+
     public void changeList(ExpenditureList lstNew, int indexList) {
-        if (indexList>=0 && indexList<overview.size()) {
+        // Überprüfung, ob Position existiert
+        if (indexList >= 0 && indexList < overview.size()) {
             ExpenditureList lst = overview.get(indexList);
             lst.init(lstNew);
         }
@@ -93,9 +137,20 @@ public class ExpenditureListsOverview {
         }
     }
 
+    /**
+     * Gibt die Liste von einer gewählten Position zurück
+     * @param position Position der gewünschten Liste
+     * @return Liste an der Position
+     */
+
     public ExpenditureList getList(int position){
         return overview.get(position);
     }
+
+    /**
+     * Gibt die gesamte Overview-Liste zurück
+     * @return Overview
+     */
 
     public ArrayList<ExpenditureList> getOverview() {
         return overview;
