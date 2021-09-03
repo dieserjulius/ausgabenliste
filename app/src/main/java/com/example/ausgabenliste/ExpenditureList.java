@@ -6,10 +6,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ExpenditureList implements Serializable {
 
     private String listName;
+    private EntryList entryList;
 
     public static final String LST = "LISTE";
 

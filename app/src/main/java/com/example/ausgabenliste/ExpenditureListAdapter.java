@@ -48,8 +48,8 @@ public class ExpenditureListAdapter extends RecyclerView.Adapter<ExpenditureList
 
         public ExpenditureListViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            tvExpenditureListName = itemView.findViewById(R.id.tvEntryName);
-            tvDeleteList = itemView.findViewById(R.id.tvEntryAmount);
+            tvExpenditureListName = itemView.findViewById(R.id.tvListName);
+            tvDeleteList = itemView.findViewById(R.id.tvDeleteText);
 
             // Klick auf ein Item
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +99,7 @@ public class ExpenditureListAdapter extends RecyclerView.Adapter<ExpenditureList
 
     @Override
     public ExpenditureListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // list_overvire_items werden in den ViewHolder gefüllt
+        // list_overview_items werden in den ViewHolder gefüllt
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_overview_item, parent, false);
         ExpenditureListViewHolder viewHolder = new ExpenditureListViewHolder(v, listener);
         return viewHolder;

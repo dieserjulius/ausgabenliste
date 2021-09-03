@@ -15,7 +15,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal">
+        app:layout_constraintTop_toBottomOf="@+id/amount">
 
         <Button
             android:id="@+id/saveEntryButton"
@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_weight="1"
+            android:onClick="deleteButtonClicked"
             android:text="@string/deleteEntryButtonText" />
 
     </LinearLayout>
@@ -49,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvWert"
+        android:id="@+id/tvAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -59,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEntryNameInput" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/entryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -70,11 +71,11 @@
         app:layout_constraintStart_toEndOf="@+id/tvEntryNameInput" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvWert"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvAmount"
+        app:layout_constraintStart_toStartOf="@+id/entryName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

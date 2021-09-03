@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView listMain;
     private ExpenditureListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private
-    ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     /**
      * Baut grundlegende Elemente der View.
