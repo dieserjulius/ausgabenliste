@@ -8,11 +8,12 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class EntryList {
+public class EntryList implements Serializable {
 
     /*public EntryList(String listname) {
         listname = listname.toLowerCase();
@@ -29,7 +30,12 @@ public class EntryList {
 
     public ArrayList<Entry> list = new ArrayList<>();
 
-    private static EntryList instance = new EntryList();
+    private static EntryList instance;
+
+    public static EntryList init(){
+        instance = new EntryList();
+        return instance;
+    }
 
     public static EntryList getInstance(){
         return instance;

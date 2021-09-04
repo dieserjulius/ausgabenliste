@@ -37,10 +37,9 @@ public class ListActivity extends AppCompatActivity {
     private EditText listNameInput;
 
     private int indexList = -1;
+    private boolean alreadyAdded = true;
 
-    //TODO Bugs: Pro Änderung der Entrys eine neue Liste
-    // Alle Einträge beim Erstellen die Gleichen,
-    // Löschen aktualisiert die Liste nicht sofort
+
 
     /**
      * Baut grundlegende Elemente der View.
@@ -55,7 +54,7 @@ public class ListActivity extends AppCompatActivity {
         /*String listname = getListnameFromInput();
         EntryList.getInstance().loadInput(this, listname);*/
 
-        entryList = EntryList.getInstance().getList();
+        //entryList = EntryList.getInstance().getList();
 
         // Übergabe der eingegebenen Daten
         Intent intent = getIntent();
@@ -65,15 +64,26 @@ public class ListActivity extends AppCompatActivity {
 
         listNameInput = findViewById(R.id.listName);
 
+        if (action == ACTIONTYPE.NEW){
+            ExpenditureList lst = getExListFromInput();
+            ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
+            overview.addList(lst);
+            overview.saveInput(this);
+
+            entryList = lst.getEntryList().getList();
+        }
         // Falls eine vorhandene Liste bearbeitet werden soll, wird diese heir geholt
-        if (action == ACTIONTYPE.EDIT_DELETE) {
+        else if (action == ACTIONTYPE.EDIT_DELETE) {
             indexList = intent.getIntExtra(LISTINDEX, -1);
 
             ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
             ExpenditureList currentList = overview.getList(indexList);
+
+            entryList = currentList.getEntryList().getList();
+
             String currentListName = currentList.getListName();
             listNameInput.setText(currentListName);
-            EntryList.getInstance().loadInput(this, currentListName);
+            currentList.getEntryList().loadInput(this, currentListName);
         }
 
         activityResultLauncher = registerForActivityResult(
@@ -85,11 +95,13 @@ public class ListActivity extends AppCompatActivity {
                         }
                     }
                 });
+
         buildRecyclerView();
     }
 
     private void buildRecyclerView() {
         entryListView = findViewById(R.id.listEntry);
+
         entryListView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         adapter = new EntryAdapter(entryList);
@@ -102,51 +114,14 @@ public class ListActivity extends AppCompatActivity {
             // Wenn auf das Item geklickt wird
             @Override
             public void onItemClick(int position) {
-                Entry entry = EntryList.getInstance().getEntry(position);
+                ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
+                ExpenditureList currentList = overview.getList(indexList);
+                Entry entry = currentList.getEntryList().getEntry(position);
                 showEntryActivity(ACTIONTYPE.EDIT_DELETE, entry, position);
             }
-
-            // Wenn auf "Löschen" geklickt wird
-            /*@Override
-            public void onDeleteClick(int position) {
-                deleteList(position);
-            }*/
         });
     }
 
-    /*private void deleteList(int position) {
-        // Alert, um betonen, dass der Eintrag endgültig gelöscht wird
-        String msg = "Sind Sie sich sicher, dass Sie den Eintrag endgültig löschen wollen?";
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        Context context = this;
-
-        String listname = getListnameFromInput();
-
-        alert.setTitle("Endgültig löschen");
-        alert.setMessage(msg);
-
-        // Bestätigungsbutton
-        alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                EntryList.getInstance().deleteEntry(position);
-                EntryList.getInstance().saveInput(context, listname);
-                adapter.notifyItemRemoved(position);
-                Log.i("ListActivity", "Yes pressed");
-            }
-        });
-
-        // Button zum abbrechen
-        alert.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i("ListActivity", "No pressed");
-            }
-        });
-
-        alert.show();
-    }*/
 
     public void createNewEntry(View view) {
         Entry entry = new Entry();
@@ -159,26 +134,25 @@ public class ListActivity extends AppCompatActivity {
         intent.putExtra(Entry.ENT, entry);
         intent.putExtra(EntryActivity.ENTRYINDEX, position);
         intent.putExtra(EntryActivity.LISTNAME, listname);
+        intent.putExtra(EntryActivity.LISTINDEX, indexList);
         intent.putExtra(EntryActivity.ACTION, action.ordinal());
-
 
 
         ExpenditureList lst = getExListFromInput();
 
         // ChangeList Aufruf, falls Liste bereits vorhanden
-        if (action == ACTIONTYPE.EDIT_DELETE) {
+        //if (action == ACTIONTYPE.EDIT_DELETE) {
             ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
             overview.changeList(lst, indexList);
             overview.saveInput(this);
-        }
+        //}
         // AddList Aufruf, falls Liste noch nicht vorhanden
-        else if (action == ACTIONTYPE.NEW) {
+        /*else if (action == ACTIONTYPE.NEW) {
             ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
             overview.addList(lst);
             overview.saveInput(this);
-        }
-
-
+            alreadyAdded = true;
+        }*/
 
         activityResultLauncher.launch(intent);
     }
@@ -187,7 +161,7 @@ public class ListActivity extends AppCompatActivity {
         ExpenditureList lst = getExListFromInput();
 
             // ChangeList Aufruf, falls Liste bereits vorhanden
-            if (action == ACTIONTYPE.EDIT_DELETE) {
+            //if (action == ACTIONTYPE.EDIT_DELETE) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
                 overview.changeList(lst, indexList);
                 overview.saveInput(this);
@@ -196,9 +170,9 @@ public class ListActivity extends AppCompatActivity {
                 returnintent.putExtra(EntryActivity.RESULT, true);
                 setResult(Activity.RESULT_OK,returnintent);
                 finish();
-            }
+            //}
             // AddList Aufruf, falls Liste noch nicht vorhanden
-            else if (action == ACTIONTYPE.NEW) {
+            /*else if (action == ACTIONTYPE.NEW && !alreadyAdded) {
                 ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
                 overview.addList(lst);
                 overview.saveInput(this);
@@ -211,7 +185,7 @@ public class ListActivity extends AppCompatActivity {
 
         Intent returnintent = new Intent();
         setResult(Activity.RESULT_CANCELED,returnintent);
-        finish();
+        finish();*/
     }
 
     /**

@@ -28,53 +28,52 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/tvListNameInput"
         app:layout_constraintStart_toEndOf="@+id/tvListNameInput" />
 
-    <LinearLayout
-        android:layout_width="407dp"
-        android:layout_height="672dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listEntry"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="100dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listName"
-        tools:layout_editor_absoluteX="1dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteX="0dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listEntry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:layout_marginBottom="16dp">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listEntry">
 
+        <Button
+            android:id="@+id/saveEntryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:onClick="createNewEntry"
+            android:text="@string/addEntryButtonText" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/saveEntryButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="7dp"
-                android:layout_weight="1"
-                android:onClick="createNewEntry"
-                android:text="@string/addEntryButtonText" />
-
-            <Button
-                android:id="@+id/backToMainButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:onClick="backToMain"
-                android:text="@string/backToMainButtonText" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/backToMainButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="7dp"
+            android:onClick="backToMain"
+            android:text="@string/backToMainButtonText" />
 
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

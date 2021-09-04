@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -135,8 +136,53 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void CreateNewList(View view) {
-        ExpenditureList exList = new ExpenditureList();
-        showListActivity(ACTIONTYPE.NEW, exList, -1);
+        android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(this);
+
+        Context context = this;
+
+        alert.setTitle("Namen eingeben");
+        alert.setMessage("Bitte geben Sie den gewünschten Namen Ihrer Liste ein.");
+
+        final EditText newListNameInput = new EditText(this);
+        newListNameInput.setMaxWidth(50);
+        alert.setView(newListNameInput);
+
+        alert.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String newListName = newListNameInput.getText().toString();
+                boolean listNameAlreadyExist = false;
+                for (ExpenditureList lst : expenditureListsOverview) {
+                    if (lst.getListName().equals(newListName)){
+                        listNameAlreadyExist = true;
+                    }
+                }
+                if (listNameAlreadyExist || newListName.equals("")){
+                    alertIllegalName();
+                    return;
+                }
+                ExpenditureList exList = new ExpenditureList(newListName);
+                ExpenditureListsOverview.getInstance().addList(exList);
+                ExpenditureListsOverview.getInstance().saveInput(context);
+                adapter.notifyItemInserted(adapter.getItemCount()+1);
+            }
+        });
+        alert.show();
+        //ExpenditureList exList = new ExpenditureList();
+        //showListActivity(ACTIONTYPE.NEW, null, -1);
+    }
+
+    private void alertIllegalName() {
+        android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(this);
+
+        alert.setTitle("Unzulässiger Name");
+        alert.setMessage("Das Eingabefeld ist leer oder der Name ist bereits vorhanden. Bitte einen anderen Namen wählen.");
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.i("MainActivity", "Ok pressed");
+            }
+        });
+        alert.show();
     }
 
     /**

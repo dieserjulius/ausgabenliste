@@ -17,12 +17,16 @@ public class EntryActivity extends AppCompatActivity {
     private ACTIONTYPE action = ACTIONTYPE.EDIT_DELETE;
 
     public static final String ACTION ="ACTION";
+    public static final String DELETED ="DELETED";
     public static final String RESULT ="RESULT";
     public static final String ENTRYINDEX = "ENTRYINDEX";
     public static final String LISTNAME = "LISTNAME";
+    public static final String LISTINDEX = "LISTINDEX";
 
     private int indexEntry = -1;
+    private int indexList = -1;
     private String nameList = "";
+    private ExpenditureList currentExList;
 
     EditText entryNameInput;
     EditText amountInput;
@@ -42,6 +46,10 @@ public class EntryActivity extends AppCompatActivity {
         int intentAction = intent.getIntExtra(ACTION, 0);
         action = ACTIONTYPE.getEnum(intentAction);
         nameList = intent.getStringExtra(LISTNAME);
+        indexList = intent.getIntExtra(LISTINDEX, -1);
+
+        ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
+        currentExList = overview.getList(indexList);
 
         entryNameInput = findViewById(R.id.entryName);
         amountInput = findViewById(R.id.amount);
@@ -49,7 +57,7 @@ public class EntryActivity extends AppCompatActivity {
         if (action == ACTIONTYPE.EDIT_DELETE) {
             indexEntry = intent.getIntExtra(ENTRYINDEX, -1);
 
-            EntryList list = EntryList.getInstance();
+            EntryList list = currentExList.getEntryList();
             Entry currentEntry = list.getEntry(indexEntry);
             String currentEntryName = currentEntry.getEntryName();
             entryNameInput.setText(currentEntryName);
@@ -75,7 +83,7 @@ public class EntryActivity extends AppCompatActivity {
 
         // ChangeList Aufruf, falls Liste bereits vorhanden
         if (action == ACTIONTYPE.EDIT_DELETE) {
-            EntryList list = EntryList.getInstance();
+            EntryList list = currentExList.getEntryList();
             list.changeEntry(ent, indexEntry);
             list.saveInput(this, nameList);
 
@@ -86,7 +94,7 @@ public class EntryActivity extends AppCompatActivity {
         }
         // AddList Aufruf, falls Liste noch nicht vorhanden
         else if (action == ACTIONTYPE.NEW) {
-            EntryList list = EntryList.getInstance();
+            EntryList list = currentExList.getEntryList();
             list.addEntry(ent);
             list.saveInput(this, nameList);
 
@@ -115,10 +123,15 @@ public class EntryActivity extends AppCompatActivity {
         alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                EntryList.getInstance().deleteEntry(indexEntry);
-                EntryList.getInstance().saveInput(context, nameList);
+                EntryList list = currentExList.getEntryList();
+                list.deleteEntry(indexEntry);
+                list.saveInput(context, nameList);
                 //adapter.notifyItemRemoved(indexEntry);
                 Log.i("ListActivity", "Yes pressed");
+
+                Intent returnintent = new Intent();
+                returnintent.putExtra(RESULT, true);
+                setResult(Activity.RESULT_OK, returnintent);
                 finish();
             }
         });

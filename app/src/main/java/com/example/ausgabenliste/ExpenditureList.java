@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ExpenditureList implements Serializable {
 
     private String listName;
-    private EntryList entryList;
+    private EntryList entryList = EntryList.init();
 
     public static final String LST = "LISTE";
 
@@ -28,7 +28,6 @@ public class ExpenditureList implements Serializable {
 
     public ExpenditureList(String listName) {
         this.listName = listName;
-        // Liste mit Einträgen folgt noch, da Programm noch nicht fertig
     }
 
     /**
@@ -38,6 +37,10 @@ public class ExpenditureList implements Serializable {
 
     public String getListName() {
         return listName;
+    }
+
+    public EntryList getEntryList(){
+        return entryList;
     }
 
     /**

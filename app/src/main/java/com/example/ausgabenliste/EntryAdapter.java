@@ -14,6 +14,8 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
     private ArrayList<Entry> entryList;
     private OnItemClickListener listener;
 
+
+
     public EntryAdapter(ArrayList<Entry> entryList) {
         this.entryList = entryList;
     }
