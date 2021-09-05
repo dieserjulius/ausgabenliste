@@ -23,8 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="7dp"
-            android:onClick="SaveEntry"
             android:layout_weight="1"
+            android:backgroundTint="#0A9C00"
+            android:onClick="SaveEntry"
             android:text="@string/saveEntryButtonText" />
 
         <Button
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_weight="1"
+            android:backgroundTint="#C60000"
             android:onClick="deleteButtonClicked"
             android:text="@string/deleteEntryButtonText" />
 
@@ -66,7 +68,7 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Einkauf"
+        android:text="@string/entryNameText"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvEntryNameInput"
         app:layout_constraintStart_toEndOf="@+id/tvEntryNameInput" />
 

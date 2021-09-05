@@ -73,19 +73,31 @@ public class EntryActivity extends AppCompatActivity {
      */
 
     public void SaveEntry(View view) {
-        // Hier wird noch nichts gespeichert
-        // Provisorisch, da das Programm noch nicht fertig ist
-        /*Intent returnintent = new Intent();
-        setResult(Activity.RESULT_CANCELED,returnintent);
-        finish();*/
-
         Entry ent = getEntryFromInput();
+
+        String newEntryName = ent.getEntryName();
+        double newAmount = ent.getAmount();
+
+        boolean entryEmty = false;
+        boolean amountEmty = false;
+
+        if (newEntryName.equals("") || newAmount == 0){
+            if (newEntryName.equals("")){
+                entryEmty = true;
+            }
+            if (newAmount == 0){
+                amountEmty = true;
+            }
+            alertEmptyInput(entryEmty, amountEmty);
+            return;
+        }
 
         // ChangeList Aufruf, falls Liste bereits vorhanden
         if (action == ACTIONTYPE.EDIT_DELETE) {
             EntryList list = currentExList.getEntryList();
             list.changeEntry(ent, indexEntry);
             list.saveInput(this, nameList);
+
 
             Intent returnintent = new Intent();
             returnintent.putExtra(EntryActivity.RESULT, true);
@@ -107,6 +119,36 @@ public class EntryActivity extends AppCompatActivity {
         Intent returnintent = new Intent();
         setResult(Activity.RESULT_CANCELED,returnintent);
         finish();
+    }
+
+    private void alertEmptyInput(boolean entryEmty, boolean amountEmty) {
+        android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(this);
+
+        String title = "";
+        String msg = "";
+
+        if (entryEmty && amountEmty){
+            title += "Leere Eingabefelder";
+            msg += "Beide Eingabefelder sind leer.\n";
+        } else if (entryEmty){
+            title += "Leeres Bezeichnungsfeld";
+            msg += "Das Eingabefeld für die Bezeichnung des Eintrags ist leer.\n";
+        } else {
+            title += "Leeres Wertefeld";
+            msg += "Das Eingabefeld für den Wert des Eintrags ist leer.\n";
+        }
+
+        msg += "Bitte füllen Sie immer alle Felder aus.";
+
+        alert.setTitle(title);
+        alert.setMessage(msg);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.i("EntryActivity", "Ok pressed");
+            }
+        });
+        alert.show();
     }
 
     public void deleteButtonClicked(View view) {
@@ -150,14 +192,14 @@ public class EntryActivity extends AppCompatActivity {
     private Entry getEntryFromInput() {
         String entryName = entryNameInput.getText().toString();
         String stringAmount = amountInput.getText().toString();
-        double amount = 0;
+        Double amountValue;
 
-        Double amountValue = Double.parseDouble(stringAmount);
-        if (amountValue == null) {
-            //Basis.alertDialogOk(this,"Fehlerhafte Matrikelnummer: "+str_matrnr,"Fehler");
-            return null;
+        if (stringAmount.equals("")) {
+            return new Entry(entryName, 0);
+        } else {
+             amountValue = Double.parseDouble(stringAmount);
         }
-        amount = amountValue.doubleValue();
+        double amount = amountValue.doubleValue();
 
         return new Entry(entryName, amount);
     }

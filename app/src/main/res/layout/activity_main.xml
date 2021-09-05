@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
+        android:backgroundTint="#0043B6"
         android:onClick="CreateNewList"
         android:text="@string/addListButtonText"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -112,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
         alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                ExpenditureList lst = ExpenditureListsOverview.getInstance().getList(position);
+                EntryList entryList = lst.getEntryList();
+                // File mit Entrys wird entfernt, damit, falls man später eine Liste mit dem
+                // selben Namen erstellen möchte, keine vergangenen Einträge angezeigt werden
+                entryList.deleteFile(context, lst.getListName());
                 ExpenditureListsOverview.getInstance().deleteList(position);
                 ExpenditureListsOverview.getInstance().saveInput(context);
                 adapter.notifyItemRemoved(position);
@@ -200,6 +205,4 @@ public class MainActivity extends AppCompatActivity {
 
         activityResultLauncher.launch(intent);
     }
-
-
 }

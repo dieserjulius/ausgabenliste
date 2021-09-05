@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -116,6 +117,18 @@ public class EntryList implements Serializable {
         catch (IOException e) {
             Log.e("ExpenditureListsOverview", "Error while Loading List from File");
         }
+    }
+
+    public boolean deleteFile(Context context, String listname){
+        String filename = getFilename(listname);
+        File dir = context.getFilesDir();
+        File file = new File(dir, filename);
+        return file.delete();
+    }
+
+    public void renameFile (Context context, String oldListname, String newListname){
+        saveInput(context, newListname);
+        deleteFile(context, oldListname);
     }
 
     public Entry getEntry(int position){

@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Ausgabenliste</string>
     <string name="tvListItemNameText">Item-Name</string>
+    <string name="tvDeleteText">Löschen</string>
     <string name="tvEntryNameText">Entry-Name</string>
     <string name="tvEntryAmountText">Amount</string>
     <string name="addListButtonText">Neue Liste</string>
     <string name="tvListNameText">Name der Liste:</string>
     <string name="tvEntryNameInputText">Bezeichnung:</string>
+    <string name="entryNameText">Einkauf</string>
     <string name="tvWertText">Wert in Euro:</string>
     <string name="addEntryButtonText">Eintrag Hinzufügen</string>
     <string name="backToMainButtonText">Liste speichern</string>
     <string name="saveEntryButtonText">Eintrag speichern</string>
     <string name="deleteEntryButtonText">Eintrag löschen</string>
+    <string name="listNameText">Monatsliste</string>
+    <string name="tvTotal">Gesamt</string>
+    <string name="tvEntryTotalAmountText">TotalAmount</string>
 </resources>

@@ -58,6 +58,7 @@ public class  ExpenditureListsOverview {
         else {
             Log.e("ExpenditureListsOverview", "Position of List out of Bounds");
         }
+
     }
 
     /**
@@ -154,5 +155,9 @@ public class  ExpenditureListsOverview {
 
     public ArrayList<ExpenditureList> getOverview() {
         return overview;
+    }
+
+    public int getSize(){
+        return overview.size();
     }
 }
