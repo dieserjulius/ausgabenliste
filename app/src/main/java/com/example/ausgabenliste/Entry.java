@@ -26,7 +26,14 @@ public class Entry implements Serializable {
         this.amount = amount;
     }
 
+    /**
+     * Methode zum Speichern des Entrys
+     * @param dout DatOutputStream, mit welchem gespeichert werden soll
+     * @return Wahrheitswert, ob das Speichern geklappt hat
+     */
+
     public boolean save(DataOutputStream dout) {
+        // Wahrheitswert, ob Speichern erfolgreich war
         boolean success = false;
         try {
             dout.writeUTF(entryName);
@@ -38,7 +45,14 @@ public class Entry implements Serializable {
         return success;
     }
 
+    /**
+     * Methode zum Laden des Entrys
+     * @param din DataInputStream, mit welchem geladen werden soll
+     * @return Wahrheitswert, ob das Laden geklappt hat
+     */
+
     public boolean load(DataInputStream din) {
+        // Wahrheitswert, ob Laden erfolgreich war
         boolean success = false;
         try {
             entryName = din.readUTF();
@@ -50,13 +64,30 @@ public class Entry implements Serializable {
         return success;
     }
 
+    /**
+     * Getter für den Namen des Eintrags
+     * @return Name des Eintrags
+     */
+
     public String getEntryName() {
         return entryName;
     }
 
+    /**
+     * Getter für den Wert des Eintrags
+     * @return Wert des Eintrags
+     */
+
     public double getAmount() {
         return amount;
     }
+
+    /**
+     * Gibt den Wert als String wieder
+     * @param inEuro Wahrheitswert, ob der Wert des Eintrages mit einem
+     *               Eurozeichen zurückgegeben werden soll
+     * @return Wert des Eintrags als String
+     */
 
     public String getAmountAsString(boolean inEuro){
         if (inEuro){
@@ -64,6 +95,11 @@ public class Entry implements Serializable {
         }
         return String.format("%,.2f", amount);
     }
+
+    /**
+     * Initialisiert einen neuen Entry
+     * @param entNew Entry, der initiaslisiert werden soll
+     */
 
     public void init(Entry entNew) {
         this.entryName = entNew.entryName;

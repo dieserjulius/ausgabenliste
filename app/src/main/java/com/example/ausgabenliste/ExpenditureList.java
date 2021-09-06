@@ -39,6 +39,11 @@ public class ExpenditureList implements Serializable {
         return listName;
     }
 
+    /**
+     * Getter für die EntryList
+     * @return EntryList
+     */
+
     public EntryList getEntryList(){
         return entryList;
     }
@@ -50,6 +55,7 @@ public class ExpenditureList implements Serializable {
      */
 
     public boolean save(DataOutputStream dout) {
+        // Wahrheitswert, ob Speichern erfolgreich war
         boolean success = false;
         try {
             dout.writeUTF(listName);
@@ -67,6 +73,7 @@ public class ExpenditureList implements Serializable {
      */
 
     public boolean load(DataInputStream din) {
+        // Wahrheitswert, ob Laden erfolgreich war
         boolean success = false;
         try {
             listName = din.readUTF();

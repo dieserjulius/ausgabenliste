@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 ExpenditureList exList = ExpenditureListsOverview.getInstance().getList(position);
-                showListActivity(ACTIONTYPE.EDIT_DELETE, exList, position);
+                showListActivity(exList, position);
             }
 
             // Wenn auf "Löschen" geklickt wird
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Methode um "showListActivity" aufzuraufen, um eine neue Liste zu erstellen
+     * Zeigt Alert für Namenseingabe einer neuen ExpenditureList an und erstellt diese daraufhin
      * @param view
      */
 
@@ -145,16 +145,19 @@ public class MainActivity extends AppCompatActivity {
 
         Context context = this;
 
+        // In einem Alert wird mit Eingabefeld dazu aufgefordert den Namen zu wählen
         alert.setTitle("Namen eingeben");
         alert.setMessage("Bitte geben Sie den gewünschten Namen Ihrer Liste ein.");
 
         final EditText newListNameInput = new EditText(this);
-        newListNameInput.setMaxWidth(50);
         alert.setView(newListNameInput);
 
+        // Button für die Bestätigung
         alert.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String newListName = newListNameInput.getText().toString();
+
+                // Überprüfung, ob der Name schon existiert oder leer ist
                 boolean listNameAlreadyExist = false;
                 for (ExpenditureList lst : expenditureListsOverview) {
                     if (lst.getListName().equals(newListName)){
@@ -165,16 +168,21 @@ public class MainActivity extends AppCompatActivity {
                     alertIllegalName();
                     return;
                 }
+
+                // Neue Liste
                 ExpenditureList exList = new ExpenditureList(newListName);
                 ExpenditureListsOverview.getInstance().addList(exList);
                 ExpenditureListsOverview.getInstance().saveInput(context);
+                // An Postion getItemCount+1, damit die Liste als neue Liste unten auftaucht
                 adapter.notifyItemInserted(adapter.getItemCount()+1);
             }
         });
         alert.show();
-        //ExpenditureList exList = new ExpenditureList();
-        //showListActivity(ACTIONTYPE.NEW, null, -1);
     }
+
+    /**
+     * Zeigt einen Alert an, falls ein nicht zulässiger Name eingegeben wurde
+     */
 
     private void alertIllegalName() {
         android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(this);
@@ -182,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         alert.setTitle("Unzulässiger Name");
         alert.setMessage("Das Eingabefeld ist leer oder der Name ist bereits vorhanden. Bitte einen anderen Namen wählen.");
 
+        //Button zum wegklicken des Hinweises
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Log.i("MainActivity", "Ok pressed");
@@ -192,16 +201,15 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Ruft die "ListActivity" auf, um eine List zu erstellen oder eine List zu bearbeiten
-     * @param action Wert, ob Liste neu erstellt oder geändert werden soll
      * @param exList Instanz der ExpenditureList, die modifiziert werden soll
      * @param position Position der Liste, die modifiziert werden soll
      */
 
-    private void showListActivity (ACTIONTYPE action, ExpenditureList exList, int position){
+    private void showListActivity (ExpenditureList exList, int position){
+        // Daten, die weitergegeben werden
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra(ExpenditureList.LST, exList);
         intent.putExtra(ListActivity.LISTINDEX, position);
-        intent.putExtra(ListActivity.ACTION, action.ordinal());
 
         activityResultLauncher.launch(intent);
     }

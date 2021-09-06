@@ -43,17 +43,22 @@ public class EntryActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        // Holt sich alles aus dem Intent
         int intentAction = intent.getIntExtra(ACTION, 0);
         action = ACTIONTYPE.getEnum(intentAction);
         nameList = intent.getStringExtra(LISTNAME);
         indexList = intent.getIntExtra(LISTINDEX, -1);
 
+        // Aktuelle ExpenditureList abholen
         ExpenditureListsOverview overview = ExpenditureListsOverview.getInstance();
         currentExList = overview.getList(indexList);
 
+        // IDs der beiden Eingabefelder
         entryNameInput = findViewById(R.id.entryName);
         amountInput = findViewById(R.id.amount);
 
+        // Falls der Eintrag bereits existiert, werden hier die Informationen geholt
+        // und bereits in die Felder eingetragen
         if (action == ACTIONTYPE.EDIT_DELETE) {
             indexEntry = intent.getIntExtra(ENTRYINDEX, -1);
 
@@ -78,9 +83,11 @@ public class EntryActivity extends AppCompatActivity {
         String newEntryName = ent.getEntryName();
         double newAmount = ent.getAmount();
 
+        // Wahrheitswerte, ob die Felder leer sind.
         boolean entryEmty = false;
         boolean amountEmty = false;
 
+        // Falls Felder leer sind, werden die Wahrheitswerte hier je nachdem gesetzt
         if (newEntryName.equals("") || newAmount == 0){
             if (newEntryName.equals("")){
                 entryEmty = true;
@@ -92,7 +99,7 @@ public class EntryActivity extends AppCompatActivity {
             return;
         }
 
-        // ChangeList Aufruf, falls Liste bereits vorhanden
+        // ChangeEntry Aufruf, falls Eintrag bereits vorhanden
         if (action == ACTIONTYPE.EDIT_DELETE) {
             EntryList list = currentExList.getEntryList();
             list.changeEntry(ent, indexEntry);
@@ -104,7 +111,7 @@ public class EntryActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK, returnintent);
             finish();
         }
-        // AddList Aufruf, falls Liste noch nicht vorhanden
+        // AddEntry Aufruf, falls Eintrag noch nicht vorhanden
         else if (action == ACTIONTYPE.NEW) {
             EntryList list = currentExList.getEntryList();
             list.addEntry(ent);
@@ -121,12 +128,19 @@ public class EntryActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Zeigt, je nach Feld, welches leer gewesen ist, einen individuellen Alert an
+     * @param entryEmty Wahrheitswert, ob das Feld für den Namen des Eintrags leer ist
+     * @param amountEmty Wahrheitswert, ob das Feld für den Wert des Eintrags leer ist
+     */
+
     private void alertEmptyInput(boolean entryEmty, boolean amountEmty) {
         android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(this);
 
         String title = "";
         String msg = "";
 
+        // Individuelle Texte, je nachdem, welche Felder nicht ausgefüllt wurden
         if (entryEmty && amountEmty){
             title += "Leere Eingabefelder";
             msg += "Beide Eingabefelder sind leer.\n";
@@ -143,6 +157,7 @@ public class EntryActivity extends AppCompatActivity {
         alert.setTitle(title);
         alert.setMessage(msg);
 
+        // Ok-Knopf zum wegklicken der Alertbox
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Log.i("EntryActivity", "Ok pressed");
@@ -150,6 +165,11 @@ public class EntryActivity extends AppCompatActivity {
         });
         alert.show();
     }
+
+    /**
+     * Zeigt Warnung vor Löschung an und löscht den aktuellen Eintrag bei Bestätigung
+     * @param view
+     */
 
     public void deleteButtonClicked(View view) {
         // Alert, um betonen, dass der Eintrag endgültig gelöscht wird
@@ -168,7 +188,6 @@ public class EntryActivity extends AppCompatActivity {
                 EntryList list = currentExList.getEntryList();
                 list.deleteEntry(indexEntry);
                 list.saveInput(context, nameList);
-                //adapter.notifyItemRemoved(indexEntry);
                 Log.i("ListActivity", "Yes pressed");
 
                 Intent returnintent = new Intent();
@@ -189,11 +208,18 @@ public class EntryActivity extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Nimmt die Eingaben und erstellt daraus einen neuen Entry
+     * @return Neuen Entry aus den Eingaben
+     */
+
     private Entry getEntryFromInput() {
         String entryName = entryNameInput.getText().toString();
         String stringAmount = amountInput.getText().toString();
         Double amountValue;
 
+        // String muss über Wrapperklasse in double umgewandelt werden
+        // Falls der String leer ist, wird der Wert des Eintrages 0
         if (stringAmount.equals("")) {
             return new Entry(entryName, 0);
         } else {

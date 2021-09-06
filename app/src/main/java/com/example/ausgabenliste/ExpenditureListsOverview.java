@@ -157,6 +157,11 @@ public class  ExpenditureListsOverview {
         return overview;
     }
 
+    /**
+     * Getter für die Größe
+     * @return Größe der Overview
+     */
+
     public int getSize(){
         return overview.size();
     }
