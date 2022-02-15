@@ -223,6 +223,11 @@ public class EntryActivity extends AppCompatActivity {
         if (stringAmount.equals("")) {
             return new Entry(entryName, 0);
         } else {
+            // Auf Telefonen in deutscher Sprache, kann Punkt automatisch durch Komma
+            // ersetzt werden, dies kann ohne Änderung des Symbols zu Abstürzen führen
+            if(stringAmount.contains(",")){
+                stringAmount = stringAmount.replaceAll(",",".");
+            }
              amountValue = Double.parseDouble(stringAmount);
         }
         double amount = amountValue.doubleValue();

@@ -25,7 +25,7 @@ public class EntryList implements Serializable {
     private String getFilename(String listname) {
         // Kreiert Dateinamen, der gut zum einlesen ist (nur LowerCase und keine Leerzeichen)
         listname = listname.toLowerCase();
-        listname = listname.replaceAll("\\s+","");
+        listname = listname.replaceAll("\\s+","_");
         String filename = "entry_" + listname + ".bin";
         return filename;
     }
